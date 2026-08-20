@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Economics Syllabus Atlas — UGC NET</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700;8..60,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EFE7D6;
+    --card:#FBF8F0;
+    --ink:#20293A;
+    --ink-soft:#5B6472;
+    --line:#CBBFA3;
+    --p1:#2B4C7E;
+    --p1-soft:#DCE4EF;
+    --p2:#A13D2F;
+    --p2-soft:#F1DCD6;
+    --gold:#A9822E;
+    --gold-soft:#EFE0BB;
+    --shadow: 0 1px 0 rgba(32,41,58,.06), 0 8px 20px -14px rgba(32,41,58,.35);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(1200px 500px at 10% -10%, rgba(43,76,126,.06), transparent 60%),
+      radial-gradient(1000px 500px at 100% 0%, rgba(161,61,47,.05), transparent 55%),
+      var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 20px 80px;}
+
+  /* ---------- HEADER ---------- */
+  .masthead{
+    display:flex; justify-content:space-between; align-items:flex-end; gap:24px;
+    border-bottom:2px solid var(--ink);
+    padding-bottom:16px; margin-bottom:6px; flex-wrap:wrap;
+  }
+  .masthead-left .eyebrow{
+    font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--ink-soft); margin-bottom:6px;
+  }
+  h1{
+    font-family:'Source Serif 4', serif; font-weight:800; font-size:38px;
+    margin:0; line-height:1.05; letter-spacing:-.01em;
+  }
+  .masthead-sub{
+    font-size:14px; color:var(--ink-soft); margin-top:6px; max-width:520px;
+  }
+  .masthead-right{ text-align:right; font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--ink-soft);}
+  .masthead-right .call-number{
+    font-size:13px; color:var(--ink); border:1px solid var(--line); padding:6px 10px;
+    border-radius:3px; display:inline-block; background:var(--card);
+  }
+
+  /* ---------- TABS ---------- */
+  .drawer-tabs{ display:flex; gap:10px; margin:26px 0 18px; }
+  .tab-btn{
+    flex:1; text-align:left; cursor:pointer; border:1px solid var(--line);
+    background:var(--card); border-radius:6px 6px 0 0; padding:14px 18px 12px;
+    position:relative; transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .tab-btn .tab-label{
+    font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.14em;
+    text-transform:uppercase; opacity:.65;
+  }
+  .tab-btn .tab-title{ font-family:'Source Serif 4', serif; font-weight:700; font-size:19px; margin-top:3px;}
+  .tab-btn .tab-meta{ font-size:12px; color:var(--ink-soft); margin-top:4px;}
+  .tab-btn[data-active="true"]{
+    box-shadow: var(--shadow); transform:translateY(-2px);
+    border-bottom:3px solid var(--ink);
+  }
+  .tab-btn[data-paper="paper1"][data-active="true"]{ border-bottom-color:var(--p1); }
+  .tab-btn[data-paper="paper2"][data-active="true"]{ border-bottom-color:var(--p2); }
+  .tab-btn:not([data-active="true"]){ opacity:.62; }
+  .tab-btn:not([data-active="true"]):hover{ opacity:.85; }
+
+  /* ---------- PROGRESS LEDGER ---------- */
+  .ledger{
+    background:var(--card); border:1px solid var(--line); border-radius:8px;
+    padding:16px 20px; display:flex; align-items:center; gap:22px; box-shadow:var(--shadow);
+    flex-wrap:wrap;
+  }
+  .stamp{
+    width:64px; height:64px; border-radius:50%; border:2px dashed var(--accent, var(--ink));
+    display:flex; align-items:center; justify-content:center; flex-direction:column;
+    transform:rotate(-6deg); flex-shrink:0; background:var(--paper);
+  }
+  .stamp b{ font-family:'IBM Plex Mono',monospace; font-size:15px; }
+  .stamp span{ font-family:'IBM Plex Mono',monospace; font-size:7.5px; letter-spacing:.06em; opacity:.7;}
+  .ledger-bar-wrap{ flex:1; min-width:200px; }
+  .ledger-bar-label{
+    display:flex; justify-content:space-between; font-family:'IBM Plex Mono',monospace;
+    font-size:11px; color:var(--ink-soft); margin-bottom:6px;
+  }
+  .ledger-track{ height:10px; background:var(--paper); border:1px solid var(--line); border-radius:5px; overflow:hidden; position:relative;}
+  .ledger-fill{ position:absolute; left:0; top:0; height:100%; background:var(--accent-soft, #ddd); width:0%; transition:width .5s ease;}
+  .ledger-fill-mastered{ position:absolute; left:0; top:0; height:100%; background:var(--accent, var(--ink)); width:0%; transition:width .5s ease; z-index:1;}
+  .ledger-legend{ display:flex; gap:14px; font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--ink-soft); margin-top:5px;}
+  .ledger-legend span{ display:inline-flex; align-items:center; gap:5px;}
+  .ledger-legend i{ width:9px; height:9px; border-radius:2px; display:inline-block;}
+  .ledger-legend .dot-cov{ background:var(--accent-soft, #ddd); border:1px solid var(--line);}
+  .ledger-legend .dot-mas{ background:var(--accent, var(--ink)); }
+  .ledger-stats{ display:flex; gap:18px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ink-soft);}
+  .ledger-stats b{ color:var(--ink); font-size:13px; display:block; font-family:'IBM Plex Mono',monospace;}
+
+  /* ---------- TOOLBAR ---------- */
+  .toolbar{ display:flex; gap:10px; margin:16px 0 20px; align-items:center; flex-wrap:wrap;}
+  .search-box{
+    flex:1; min-width:200px; position:relative;
+  }
+  .search-box input{
+    width:100%; padding:10px 14px 10px 34px; border:1px solid var(--line); border-radius:6px;
+    background:var(--card); font-family:'IBM Plex Sans'; font-size:13px; color:var(--ink);
+  }
+  .search-box input:focus{ outline:2px solid var(--accent, var(--ink)); outline-offset:1px;}
+  .search-box::before{
+    content:"⌕"; position:absolute; left:12px; top:50%; transform:translateY(-50%);
+    font-size:15px; color:var(--ink-soft);
+  }
+  .ghost-btn{
+    font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.05em; text-transform:uppercase;
+    border:1px solid var(--line); background:var(--card); color:var(--ink); padding:9px 14px;
+    border-radius:6px; cursor:pointer;
+  }
+  .ghost-btn:hover{ border-color:var(--accent, var(--ink)); }
+
+  /* ---------- UNIT DIRECTORY (shelf strip) ---------- */
+  .shelf{ display:grid; grid-template-columns:repeat(auto-fill,minmax(64px,1fr)); gap:6px; margin:18px 0 24px; }
+  .shelf-tile{
+    aspect-ratio:1; border:1px solid var(--line); border-radius:5px; background:var(--card);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    cursor:pointer; position:relative; overflow:hidden;
+  }
+  .shelf-tile b{ font-family:'IBM Plex Mono',monospace; font-size:15px; }
+  .shelf-tile .fillbg{
+    position:absolute; left:0; bottom:0; width:100%; background:var(--accent-soft, #eee);
+    height:0%; transition:height .4s ease; z-index:0;
+  }
+  .shelf-tile b, .shelf-tile small{ position:relative; z-index:1;}
+  .shelf-tile small{ font-size:9px; color:var(--ink-soft);}
+  .shelf-tile:hover{ border-color:var(--accent, var(--ink)); }
+
+  /* ---------- UNIT DRAWERS ---------- */
+  .drawer{
+    border:1px solid var(--line); border-radius:8px; background:var(--card);
+    margin-bottom:12px; overflow:hidden; box-shadow:var(--shadow);
+  }
+  .drawer-head{
+    display:flex; align-items:center; gap:16px; padding:16px 18px; cursor:pointer;
+    -webkit-user-select:none; user-select:none;
+  }
+  .drawer-num{
+    font-family:'Source Serif 4', serif; font-weight:800; font-size:26px; color:var(--accent, var(--ink));
+    width:44px; flex-shrink:0;
+  }
+  .drawer-title-wrap{ flex:1; min-width:0;}
+  .drawer-title{ font-family:'Source Serif 4', serif; font-weight:700; font-size:18px; }
+  .drawer-sub{ font-size:12px; color:var(--ink-soft); margin-top:2px; font-family:'IBM Plex Mono',monospace;}
+  .drawer-progress{ width:120px; flex-shrink:0; }
+  .drawer-progress .ledger-track{ height:7px; position:relative;}
+  .drawer-progress-pct{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-align:right; margin-top:3px; color:var(--ink-soft);}
+  .chevron{ width:18px; height:18px; flex-shrink:0; transition:transform .25s ease; color:var(--ink-soft);}
+  .drawer[data-open="true"] .chevron{ transform:rotate(180deg); }
+
+  .drawer-body{
+    max-height:0; overflow:hidden; transition:max-height .35s ease;
+    border-top:1px dashed var(--line);
+  }
+  .drawer[data-open="true"] .drawer-body{ max-height:20000px; }
+  .topic-grid{
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr));
+    gap:14px; padding:18px;
+  }
+
+  /* ---------- TOPIC CARD (index card) ---------- */
+  .topic-card{
+    background:var(--paper); border:1px solid var(--line); border-radius:6px;
+    padding:14px 16px 12px; position:relative;
+  }
+  .topic-card::before{
+    content:""; position:absolute; top:0; left:14px; right:14px; height:1px;
+    background:repeating-linear-gradient(to right, var(--line) 0 5px, transparent 5px 9px);
+    opacity:.9;
+  }
+  .topic-head{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:8px;}
+  .topic-title{ font-family:'Source Serif 4', serif; font-weight:700; font-size:14.5px; line-height:1.3; }
+  .topic-badges{ display:flex; flex-direction:column; gap:4px; flex-shrink:0; align-items:flex-end;}
+  .topic-frac{
+    font-family:'IBM Plex Mono',monospace; font-size:10px; white-space:nowrap;
+    border-radius:10px; padding:2px 8px; border:1px solid var(--line);
+  }
+  .topic-frac.covered{ color:var(--ink-soft); }
+  .topic-frac.mastered{ color:var(--accent, var(--ink)); border-color:var(--accent, var(--line)); }
+  .sub-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:4px;}
+  .sub-header{
+    display:grid; grid-template-columns:1fr repeat(3, 22px); align-items:center; gap:6px;
+    padding:0 0 4px; margin-bottom:2px; border-bottom:1px solid var(--line);
+  }
+  .sub-header .rlabel{
+    font-family:'IBM Plex Mono',monospace; font-size:9px; color:var(--ink-soft); text-align:center;
+  }
+  .sub-item{
+    display:grid; grid-template-columns:1fr repeat(3, 22px); align-items:center; gap:6px;
+    font-size:12.5px; line-height:1.42; padding:3px 0;
+  }
+  .sub-item .sub-text{ color:var(--ink); }
+  .sub-item.covered .sub-text{ color:var(--ink); }
+  .sub-item.covered:not(.mastered) .sub-text::before{ content:"● "; color:var(--accent, var(--ink)); opacity:.55; font-size:8px; }
+  .sub-item.mastered .sub-text{ color:var(--ink-soft); text-decoration:line-through; text-decoration-color:var(--line); }
+  .rchk{
+    appearance:none; -webkit-appearance:none; width:16px; height:16px; justify-self:center;
+    border:1.4px solid var(--line); border-radius:3px; cursor:pointer; position:relative;
+    background:var(--paper);
+  }
+  .rchk:checked{ background:var(--accent, var(--ink)); border-color:var(--accent, var(--ink)); }
+  .rchk:checked::after{
+    content:"✓"; position:absolute; top:-2.5px; left:2px; color:#fff; font-size:10.5px; font-weight:700;
+  }
+  .rchk:nth-of-type(1){ opacity:.85; }
+  .rchk:focus-visible{ outline:2px solid var(--accent, var(--ink)); outline-offset:1px; }
+
+  .empty-state{ padding:40px; text-align:center; color:var(--ink-soft); font-size:13px; }
+
+  footer{ margin-top:34px; text-align:center; font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--ink-soft);}
+
+  @media(max-width:640px){
+    h1{ font-size:28px; }
+    .masthead{ flex-direction:column; align-items:flex-start; }
+    .masthead-right{ text-align:left; }
+    .drawer-progress{ display:none; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ transition:none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="masthead">
+    <div class="masthead-left">
+      <div class="eyebrow">UGC NET / JRF · Subject Code 01</div>
+      <h1>Economics Syllabus Atlas</h1>
+      <div class="masthead-sub">Every unit, chapter and sub-topic of Paper I &amp; Paper II, laid out as a card catalogue you can check off as you revise.</div>
+    </div>
+    <div class="masthead-right">
+      <div class="call-number" id="dateTag">Target: Dec 2026 session</div>
+    </div>
+  </div>
+
+  <div class="drawer-tabs">
+    <div class="tab-btn" data-paper="paper1" data-active="true" onclick="setPaper('paper1')">
+      <div class="tab-label">Drawer I</div>
+      <div class="tab-title">Paper I — Teaching &amp; Research Aptitude</div>
+      <div class="tab-meta" id="p1meta">10 units</div>
+    </div>
+    <div class="tab-btn" data-paper="paper2" data-active="false" onclick="setPaper('paper2')">
+      <div class="tab-label">Drawer II</div>
+      <div class="tab-title">Paper II — Economics</div>
+      <div class="tab-meta" id="p2meta">10 units</div>
+    </div>
+  </div>
+
+  <div class="ledger" id="ledger">
+    <div class="stamp" id="stamp"><b id="stampPct">0%</b><span>COVERED</span></div>
+    <div class="ledger-bar-wrap">
+      <div class="ledger-bar-label"><span id="ledgerTitle">Paper I coverage</span><span id="ledgerFrac">0 / 0 sub-topics covered</span></div>
+      <div class="ledger-track"><div class="ledger-fill" id="ledgerFill"></div><div class="ledger-fill-mastered" id="ledgerFillMastered"></div></div>
+      <div class="ledger-legend"><span><i class="dot-cov"></i>Read at least once</span><span><i class="dot-mas"></i>Mastered (all 3 passes)</span></div>
+    </div>
+    <div class="ledger-stats">
+      <div><b id="statUnits">0</b>units</div>
+      <div><b id="statTopics">0</b>chapters</div>
+      <div><b id="statSubs">0</b>sub-topics</div>
+      <div><b id="statMastered">0</b>mastered</div>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <div class="search-box"><input id="searchInput" type="text" placeholder="Search a chapter or sub-topic…" oninput="renderDrawers()"></div>
+    <button class="ghost-btn" onclick="expandAll(true)">Expand all</button>
+    <button class="ghost-btn" onclick="expandAll(false)">Collapse all</button>
+  </div>
+
+  <div class="shelf" id="shelf"></div>
+
+  <div id="drawers"></div>
+
+  <footer>Built from your merged UGC NET Economics syllabus workbook · progress is saved on this device</footer>
+</div>
+
+<script>
+const SYLLABUS = {"paper1": [{"unit": "Unit 1", "unit_name": "Teaching Aptitude", "topics": [{"topic": "Teaching: Concept, Objectives, Levels and Characteristics", "subs": ["Meaning and concept of teaching", "Objectives of teaching", "Memory level of teaching", "Understanding level of teaching", "Reflective level of teaching", "Nature, scope and objectives of teaching", "Teaching-learning relationship and characteristics of effective teaching", "Memory, Understanding and Reflective levels: objectives, learner role, teacher role and evaluation", "Teaching as facilitation and professional competence"]}, {"topic": "Learner Characteristics and Factors Affecting Teaching", "subs": ["Characteristics of adolescent and adult learners", "Cognitive, affective and psychomotor characteristics", "Individual differences among learners", "Adolescent and adult learners: academic, social, emotional and cognitive characteristics", "Individual differences, motivation, readiness and prior learning", "Teacher-related, learner-related, support-material, infrastructure and institutional factors"]}, {"topic": "Methods of Teaching in Higher Learning", "subs": ["Teacher-centred methods (Lecture method)", "Learner-centred methods (Discussion, Seminar, Project)", "Team teaching", "Case study method", "Constructivist approach to teaching", "Lecture, demonstration, discussion, seminar, tutorial, project and problem-solving methods", "Teacher-centred and learner-centred approaches", "Team teaching, case study, collaborative and cooperative learning", "Offline, online and blended teaching approaches"]}, {"topic": "Teaching Support Systems", "subs": ["Traditional aids: chalkboard, charts, models", "Modern teaching aids: multimedia, projector, smart boards", "e-learning and online teaching tools", "Traditional, modern and ICT-based teaching support systems", "Audio-visual aids, smart classroom, LMS, MOOCs and digital learning resources", "SWAYAM, SWAYAM Prabha and open educational resources"]}, {"topic": "Evaluation Systems", "subs": ["Evaluation systems: formative and summative", "Choice Based Credit System (CBCS)", "Semester system", "Question bank, computerised evaluation", "Innovations in evaluation systems", "Meaning, purpose and principles of evaluation", "Formative, summative, diagnostic and placement evaluation", "Criterion-referenced and norm-referenced evaluation", "CBCS, grading, feedback, computer-based testing and innovations in assessment"]}]}, {"unit": "Unit 2", "unit_name": "Research Aptitude", "topics": [{"topic": "Research: Meaning, Types and Characteristics", "subs": ["Meaning and definition of research", "Types of research: Fundamental, Applied, Action research", "Qualitative and Quantitative research", "Characteristics of good research", "Basic, applied, action, exploratory, descriptive, analytical, historical, qualitative and quantitative research", "Positivism, post-positivism and mixed-method research approaches", "Interdisciplinary and multidisciplinary research"]}, {"topic": "Research Process", "subs": ["Formulation of research problem", "Review of literature", "Formulation of hypothesis", "Research design", "Data collection, analysis and interpretation", "Conclusion and report writing", "Identification of research problem and literature review", "Objectives, research questions and hypothesis formulation", "Research design, sampling, tools, data collection, analysis, interpretation and conclusion"]}, {"topic": "Methods of Research", "subs": ["Experimental method", "Descriptive/Survey method", "Historical method", "Case study method", "Experimental, survey, case study, observation, interview and historical methods", "Qualitative and quantitative methods: strengths and limitations", "Reliability, validity and triangulation basics"]}, {"topic": "Research Communication", "subs": ["Difference between paper, article and report", "Organising and participating in workshops, seminars, conferences and symposia", "Research paper structure, conference presentation and seminar/workshop purpose", "Citation, bibliography and reference management concepts"]}, {"topic": "Thesis and Article Writing", "subs": ["Format and characteristics of thesis writing", "Referencing styles (APA, MLA, Chicago)", "Format of research article/paper", "Impact factor, citation index, h-index", "Abstract, introduction, review, methodology, results, discussion and conclusion", "Referencing styles and academic writing conventions"]}, {"topic": "ICT in Research", "subs": ["Use of ICT in literature search and data analysis", "Application of ICT in research report writing", "Online databases, digital libraries, repositories and search strategies", "Reference managers, spreadsheets, statistical software and online surveys", "Research data storage, sharing and scholarly communication"]}, {"topic": "Research Ethics", "subs": ["Ethics in conducting research", "Plagiarism and its avoidance", "Research misconduct and integrity", "Informed consent, confidentiality and privacy", "Authorship, conflict of interest and research integrity", "Plagiarism, fabrication, falsification and duplicate publication"]}]}, {"unit": "Unit 3", "unit_name": "Comprehension", "topics": [{"topic": "Reading Comprehension", "subs": ["A passage of text followed by questions", "Understanding the central idea and theme of a passage", "Drawing inferences from a passage", "Answering direct and inferential questions based on the passage", "Main idea, central argument, supporting details and inference", "Assumptions, conclusions, tone, vocabulary in context and author's purpose", "Fact versus opinion and logical interpretation of passages"]}]}, {"unit": "Unit 4", "unit_name": "Communication", "topics": [{"topic": "Meaning, Process, Types and Characteristics of Communication", "subs": ["Meaning and definition of communication", "Types of communication: verbal, non-verbal", "Characteristics of effective communication", "Sender, message, encoding, channel, receiver, decoding and feedback", "Verbal, non-verbal, formal, informal, interpersonal, intrapersonal, group and mass communication"]}, {"topic": "Effective, Classroom and Inter-cultural Communication", "subs": ["Interpersonal communication", "Intra-personal communication", "Group communication", "Mass communication", "Classroom communication", "Inter-cultural communication", "Active listening, empathy, clarity, completeness and feedback", "Classroom communication, questioning and teacher-student interaction", "Inter-cultural communication and group dynamics"]}, {"topic": "Barriers to Effective Communication", "subs": ["Physical/environmental barriers", "Psychological barriers", "Linguistic/semantic barriers", "Cultural barriers", "Organisational barriers", "Physical, semantic, psychological, socio-cultural, organisational and technological barriers", "Noise, perception and information overload; overcoming barriers"]}, {"topic": "Mass Media and Society", "subs": ["Role of mass media in society", "Print, electronic and social media", "Media and its influence on education", "Print, radio, television, film and digital/social media", "Media literacy, public opinion and social impact of mass communication"]}]}, {"unit": "Unit 5", "unit_name": "Mathematical Reasoning and Aptitude", "topics": [{"topic": "Types of Reasoning", "subs": ["Deductive reasoning", "Inductive reasoning", "Inductive and deductive reasoning", "Analogy, classification, pattern recognition and numerical reasoning"]}, {"topic": "Series, Codes and Relationships", "subs": ["Number series completion", "Letter series completion", "Coding-decoding", "Classification and relationship problems", "Arithmetic and geometric patterns, missing term and wrong term", "Alphabet series, coding-decoding, blood relations and direction/relationship problems"]}, {"topic": "Mathematical Aptitude", "subs": ["Fractions and simplification", "Time, distance and speed", "Time and work", "Ratio and proportion", "Percentage", "Profit and loss", "Simple and compound interest", "Averages", "Mensuration basics", "Fractions, decimals, ratio and proportion, unitary method", "Percentage, profit and loss, discount, simple and compound interest", "Average, time-distance-speed and basic quantitative aptitude"]}]}, {"unit": "Unit 6", "unit_name": "Logical Reasoning", "topics": [{"topic": "Structure of Arguments and Categorical Propositions", "subs": ["Argument forms", "Structure of categorical propositions", "Evaluating the cogency of an argument", "Premises and conclusion, validity, truth and soundness", "A, E, I, O propositions, distribution of terms and categorical syllogism", "Formal and informal fallacies, ambiguity and uses of language"]}, {"topic": "Deductive and Inductive Reasoning", "subs": ["Formal and informal fallacies", "Deductive validity vs. inductive strength", "Strength, cogency and evaluation of arguments", "Generalisation and analogical reasoning"]}, {"topic": "Analogies", "subs": ["Verbal analogies", "Word and number analogies", "Verbal, numerical and symbolic analogies", "Relationship identification and logical comparison"]}, {"topic": "Venn Diagram and Square of Opposition", "subs": ["Simple and multiple use of Venn diagrams", "Indicating class relationships", "Syllogism and Venn diagram verification", "One, two and multi-set Venn representations", "Validity of categorical arguments using Venn diagrams", "Contradictory, contrary, subcontrary and subalternation relationships"]}, {"topic": "Indian Logic", "subs": ["Means of knowledge (Pramana): Pratyaksha, Anumana, Upamana, Shabda", "Structure and kinds of Anumana (inference)", "Vyapti (invariable concomitance)", "Hetvabhasa (fallacies of reasoning)", "Pramana: Pratyaksha, Anumana, Upamana, Shabda, Arthapatti and Anupalabdhi", "Vyapti, Hetu, Paksha, Sadhya, Sapaksha, Vipaksha and Hetvabhasa"]}]}, {"unit": "Unit 7", "unit_name": "Data Interpretation", "topics": [{"topic": "Sources, Acquisition and Classification of Data", "subs": ["Primary and secondary sources of data", "Methods of data acquisition", "Classification and tabulation of data", "Primary and secondary data, census and sample data", "Qualitative/quantitative, discrete/continuous data, classification and tabulation"]}, {"topic": "Quantitative and Qualitative Data", "subs": ["Nature of quantitative data", "Nature of qualitative data", "Scales of measurement and frequency distributions", "Data quality and interpretation basics"]}, {"topic": "Graphical Representation and Mapping of Data", "subs": ["Bar diagrams, pie charts, histograms", "Line graphs and frequency polygons", "Mapping techniques for data representation", "Bar charts, pie charts, histograms, line graphs, tables and thematic maps", "Reading scales, trends, rankings and comparative visual interpretation"]}, {"topic": "Data Interpretation and Governance", "subs": ["Interpretation of tabular data", "Interpretation of graphical data", "Data and Governance", "Percentage, ratio, average, growth and approximation-based interpretation", "Evidence-based governance, indicators and responsible use of data"]}]}, {"unit": "Unit 8", "unit_name": "Information and Communication Technology (ICT)", "topics": [{"topic": "ICT: Meaning, Uses and Terminology", "subs": ["General abbreviations and terminology of ICT", "Advantages and limitations of ICT", "Uses of ICT in teaching-learning", "Hardware, software, operating system, memory, storage and input/output basics", "Common ICT terminology and abbreviations", "Advantages, limitations and applications of ICT in education"]}, {"topic": "Internet, Intranet, E-mail and Conferencing", "subs": ["Internet and Intranet: concepts and uses", "E-mail: composing, sending, security", "Audio conferencing", "Video conferencing", "Web, browser, search engine, URL, intranet and networking basics", "Email etiquette, attachments, CC/BCC, spam and phishing awareness", "Audio/video conferencing and virtual classroom concepts"]}, {"topic": "Digital Initiatives in Higher Education", "subs": ["SWAYAM and SWAYAM PRABHA", "National Digital Library", "e-PG Pathshala, e-Shodh Sindhu, Shodhganga", "MOOCs and digital learning platforms", "SWAYAM, SWAYAM Prabha, MOOCs and National Digital Library concepts", "E-content, digital repositories and online learning ecosystems"]}, {"topic": "ICT and Governance", "subs": ["Digital India initiative", "e-Governance applications", "E-governance, digital public services, electronic records and citizen-centric delivery", "Cyber security and responsible digital practices"]}]}, {"unit": "Unit 9", "unit_name": "People, Development and Environment", "topics": [{"topic": "Development and Environment", "subs": ["Millennium Development Goals (MDGs)", "Sustainable Development Goals (SDGs)", "Concept of sustainable development", "Sustainable development, SDGs and intergenerational equity", "Environment-development relationship and development indicators"]}, {"topic": "Human and Environment Interaction", "subs": ["Man-environment relationship", "Impact of human activities on the environment", "Industrialisation, urbanisation, agriculture, mining and land-use change", "Deforestation, resource depletion and ecological consequences"]}, {"topic": "Environmental Issues: Pollution, Waste and Climate", "subs": ["Air pollution", "Water pollution", "Soil pollution", "Noise pollution", "Solid, liquid, biomedical, hazardous and e-waste", "Climate change: causes and consequences", "Socio-economic and political dimensions of climate change", "Air, water, soil and noise pollution: sources, effects and control", "Solid, hazardous, biomedical and e-waste management", "Greenhouse effect, global warming, climate change, mitigation and adaptation"]}, {"topic": "Impacts of Pollutants on Human Health", "subs": ["Health effects of air and water pollution", "Occupational and environmental health hazards", "Exposure pathways, occupational and environmental health impacts", "Vulnerable groups and short/long-term effects of pollutants"]}, {"topic": "Natural and Energy Resources", "subs": ["Solar energy", "Wind energy", "Soil resources", "Hydro energy", "Geothermal energy", "Biomass energy", "Nuclear energy", "Forest resources", "Solar, wind, hydro, geothermal, biomass and nuclear energy", "Renewable versus non-renewable resources and conservation"]}, {"topic": "Natural Hazards and Disasters", "subs": ["Types of natural hazards and disasters", "Mitigation strategies and disaster management", "Earthquake, flood, cyclone, drought, landslide and tsunami", "Preparedness, mitigation, response, recovery and resilience"]}, {"topic": "Environmental Protection: Policies and Agreements", "subs": ["Environmental Protection Act, 1986", "National Action Plan on Climate Change", "Montreal Protocol", "Rio Summit", "Convention on Biodiversity", "Kyoto Protocol", "Paris Agreement", "International Solar Alliance", "Environment Protection Act 1986", "Montreal Protocol, Rio Summit, Convention on Biological Diversity, Kyoto Protocol and Paris Agreement", "National Action Plan on Climate Change and International Solar Alliance"]}]}, {"unit": "Unit 10", "unit_name": "Higher Education System", "topics": [{"topic": "Institutions of Higher Learning in Ancient India", "subs": ["Ancient centres of learning (Nalanda, Takshashila, Vikramshila)", "Gurukul system of education", "Takshashila, Nalanda, Vikramashila and other major centres of learning", "Traditional knowledge systems and institutional characteristics"]}, {"topic": "Evolution of Higher Learning in Post-Independence India", "subs": ["Growth of universities and colleges post-independence", "Key education commissions and policies", "Expansion of universities, colleges and research institutions", "Major milestones in higher education and research development"]}, {"topic": "Learning Programmes", "subs": ["Oriental institutions", "Conventional (formal) education programmes", "Non-conventional/distance and open learning programmes", "Oriental, conventional, open, distance, continuing and online learning programmes", "Formal, non-formal and flexible learning modes"]}, {"topic": "Professional, Technical and Skill-Based Education", "subs": ["Professional education system in India", "Technical education system in India", "Skill development initiatives", "Professional education, technical education, vocational and competency-based education", "Employability and skill development"]}, {"topic": "Value Education and Environmental Education", "subs": ["Concept and importance of value education", "Integration of environmental education in curriculum", "Ethics, constitutional values, citizenship and social responsibility", "Environmental awareness and sustainability education"]}, {"topic": "Policies, Governance, Administration and Regulatory Institutions", "subs": ["National Education Policy (NEP) 2020", "Regulatory bodies: UGC, AICTE, NCTE", "Governance structure of higher education institutions", "Governance, autonomy, accountability and quality assurance", "UGC, NTA, NAAC, AICTE, NCTE and other higher-education institutions and their broad roles", "Accreditation, ranking and financing concepts; NEP 2020 as relevant current policy context", "Central, State, Deemed and Private universities", "Institutions of national importance", "Interaction among regulatory and academic institutions"]}]}], "paper2": [{"unit": "Unit 1", "unit_name": "Microeconomics", "topics": [{"topic": "Theory of Consumer Behaviour", "subs": ["Cardinal utility approach: Law of diminishing marginal utility", "Ordinal approach: Indifference curve analysis", "Consumer's equilibrium and derivation of demand curve", "Income effect, Substitution effect and Price effect (Slutsky and Hicksian decomposition)", "Revealed Preference Theory", "Duality in consumer theory", "Choice under risk and uncertainty: Expected utility theory", "Consumer surplus", "Determinants of demand and supply", "Elasticity of demand and supply (price, income, cross)", "Market equilibrium and stability", "Budget set, budget line and shifts due to income and price changes", "Indifference curve properties, MRS, special preferences: substitutes and complements", "Income-consumption curve, price-consumption curve and Engel curve", "Normal, inferior and Giffen goods; Veblen, bandwagon and snob effects", "Point and arc elasticity of demand; determinants and applications", "Slutsky and Hicks decomposition in graphical and analytical form", "Weak Axiom of Revealed Preference (WARP) and consistency", "Consumer surplus and duality in consumer theory"]}, {"topic": "Theory of Production and Costs", "subs": ["Production function: Short-run and Long-run", "Law of variable proportions", "Returns to scale and economies of scale", "Cobb-Douglas and CES production functions", "Cost curves: Short-run and Long-run", "Producer's equilibrium", "Total, average and marginal product; law of variable proportions", "Isoquants, MRTS, ridge lines and economic region of production", "Isocost, least-cost combination and expansion path", "Fixed, variable, total, average and marginal costs; SR and LR cost curves", "Economies and diseconomies of scale; economies of scope"]}, {"topic": "Decision Making under Uncertainty and Attitude towards Risk", "subs": ["Cardinal utility approach: Law of diminishing marginal utility", "Ordinal approach: Indifference curve analysis", "Consumer's equilibrium and derivation of demand curve", "Income effect, Substitution effect and Price effect (Slutsky and Hicksian decomposition)", "Revealed Preference Theory", "Duality in consumer theory", "Choice under risk and uncertainty: Expected utility theory", "Consumer surplus", "Risk versus uncertainty and expected value", "Expected utility theory, risk aversion, risk neutrality and risk preference", "Certainty equivalent, risk premium, insurance and diversification"]}, {"topic": "Game Theory – Non-Cooperative Games", "subs": ["Nash equilibrium", "Prisoner's Dilemma", "Dominant strategy and mixed strategy", "Repeated games", "Perfect competition: short-run and long-run equilibrium", "Monopoly: price and output determination, price discrimination", "Monopolistic competition", "Duopoly and Oligopoly models: Cournot, Bertrand, Stackelberg", "Kinked demand curve model", "Price leadership and cartels", "Normal-form games, players, strategies and payoff matrix", "Dominant and dominated strategies; best response and Nash equilibrium", "Pure and mixed strategies; Prisoner's Dilemma and coordination games", "Sequential games, backward induction and subgame-perfect equilibrium"]}, {"topic": "Market Structures, Competitive and Non-Competitive Equilibria and Efficiency Properties", "subs": ["Perfect competition: short-run and long-run equilibrium", "Monopoly: price and output determination, price discrimination", "Monopolistic competition", "Duopoly and Oligopoly models: Cournot, Bertrand, Stackelberg", "Kinked demand curve model", "Price leadership and cartels", "Firm and industry equilibrium under perfect competition", "Monopoly welfare loss and elasticity-based pricing rule", "Monopolistic competition, product differentiation and excess capacity", "Oligopoly models: Cournot, Bertrand, Stackelberg, kinked demand and price leadership", "Cartels, collusion, strategic interaction and efficiency comparison"]}, {"topic": "Factor Pricing", "subs": ["Marginal productivity theory of distribution", "Theories of Rent (Ricardian, Quasi-rent)", "Theories of Wages", "Theories of Interest", "Theories of Profit", "Demand for factors, marginal revenue product and value of marginal product", "Labour market equilibrium, monopsony and bilateral monopoly basics"]}, {"topic": "General Equilibrium Analysis", "subs": ["Partial vs. General equilibrium analysis", "Efficiency in exchange and production (Edgeworth Box)", "Fundamental theorems of welfare economics", "Welfare criteria: Pareto optimality, Kaldor-Hicks, Scitovsky", "Bergson-Samuelson Social Welfare Function", "Theory of Second Best", "Arrow's Impossibility Theorem", "Exchange economy, Edgeworth box and contract curve", "Production economy and simultaneous equilibrium in factor and product markets", "Competitive equilibrium and efficiency intuition"]}, {"topic": "Efficiency Criteria: Pareto-Optimality, Kaldor-Hicks and Wealth Maximization", "subs": ["Partial vs. General equilibrium analysis", "Efficiency in exchange and production (Edgeworth Box)", "Fundamental theorems of welfare economics", "Welfare criteria: Pareto optimality, Kaldor-Hicks, Scitovsky", "Bergson-Samuelson Social Welfare Function", "Theory of Second Best", "Arrow's Impossibility Theorem", "Pareto improvement and Pareto optimal allocation", "Kaldor-Hicks compensation principle", "Wealth maximization criterion and comparison of efficiency criteria"]}, {"topic": "Welfare Economics: Fundamental Theorems and Social Welfare Function", "subs": ["Partial vs. General equilibrium analysis", "Efficiency in exchange and production (Edgeworth Box)", "Fundamental theorems of welfare economics", "Welfare criteria: Pareto optimality, Kaldor-Hicks, Scitovsky", "Bergson-Samuelson Social Welfare Function", "Theory of Second Best", "Arrow's Impossibility Theorem", "First and Second Fundamental Theorems of Welfare Economics", "Bergson-Samuelson social welfare function and utility possibility frontier", "Theory of Second Best and Arrow's Impossibility Theorem as enrichment"]}, {"topic": "Asymmetric Information: Adverse Selection and Moral Hazard", "subs": ["Externalities: types and remedies (Pigouvian tax, Coase theorem)", "Public goods and free-rider problem", "Asymmetric information: Adverse selection", "Moral hazard", "Principal-agent problem", "Signalling and screening", "Signalling, screening and principal-agent problem", "Information asymmetry and market consequences"]}]}, {"unit": "Unit 2", "unit_name": "Macroeconomics", "topics": [{"topic": "National Income: Concepts and Measurement", "subs": ["Concepts: GDP, GNP, NNP, NDP, Personal and Disposable Income", "Measurement of national income: Product, Income and Expenditure methods", "Circular flow of income", "GDP, GNP/GNI, NDP, NNP, nominal and real income, market price and factor cost", "Value added, depreciation, double counting and circular flow"]}, {"topic": "Determination of Output and Employment: Classical and Keynesian Approach", "subs": ["Classical theory: Say's Law", "Keynesian theory of effective demand", "Consumption function: Absolute, Relative and Permanent Income Hypotheses", "Investment function and Marginal Efficiency of Capital", "Multiplier and Accelerator principle", "Say's Law, wage-price flexibility and full-employment equilibrium", "Effective demand and underemployment equilibrium"]}, {"topic": "Consumption Function", "subs": ["Classical theory: Say's Law", "Keynesian theory of effective demand", "Consumption function: Absolute, Relative and Permanent Income Hypotheses", "Investment function and Marginal Efficiency of Capital", "Multiplier and Accelerator principle", "Absolute Income Hypothesis, APC and MPC", "Relative Income Hypothesis, Permanent Income Hypothesis and Life-Cycle Hypothesis"]}, {"topic": "Investment Function", "subs": ["Classical theory: Say's Law", "Keynesian theory of effective demand", "Consumption function: Absolute, Relative and Permanent Income Hypotheses", "Investment function and Marginal Efficiency of Capital", "Multiplier and Accelerator principle", "Autonomous and induced investment", "Marginal efficiency of capital and interest rate-investment relationship"]}, {"topic": "Multiplier and Accelerator", "subs": ["Classical theory: Say's Law", "Keynesian theory of effective demand", "Consumption function: Absolute, Relative and Permanent Income Hypotheses", "Investment function and Marginal Efficiency of Capital", "Multiplier and Accelerator principle", "Simple, tax and balanced-budget multiplier", "Open-economy multiplier and multiplier-accelerator interaction"]}, {"topic": "Demand for Money", "subs": ["Classical (Quantity Theory of Money): Fisher and Cambridge approach", "Keynesian theory of demand for money (liquidity preference)", "Friedman's restatement of Quantity Theory", "Determinants of money supply, money multiplier", "Fisher and Cambridge cash-balance approach", "Keynesian liquidity preference: transactions, precautionary and speculative motives", "Baumol-Tobin and portfolio approach; Friedman's modern quantity theory"]}, {"topic": "Supply of Money", "subs": ["Classical (Quantity Theory of Money): Fisher and Cambridge approach", "Keynesian theory of demand for money (liquidity preference)", "Friedman's restatement of Quantity Theory", "Determinants of money supply, money multiplier", "Monetary aggregates, high-powered money and money multiplier", "Deposit creation and determinants of money supply"]}, {"topic": "IS–LM Model Approach", "subs": ["Derivation of IS curve", "Derivation of LM curve", "Goods market and Money market equilibrium", "Fiscal and monetary policy effectiveness under IS-LM framework", "Derivation and shifts of IS and LM curves", "Liquidity trap, classical range, crowding out and policy mix"]}, {"topic": "Inflation and Phillips Curve Analysis", "subs": ["Types and causes of inflation", "Measures to control inflation", "Phillips Curve: short-run and long-run, NAIRU", "Trade cycles: phases and theories", "Demand-pull, cost-push and structural inflation", "Inflationary gap, expectations and short-run/long-run Phillips Curve", "Natural rate of unemployment and NAIRU"]}, {"topic": "Business Cycles", "subs": ["Types and causes of inflation", "Measures to control inflation", "Phillips Curve: short-run and long-run, NAIRU", "Trade cycles: phases and theories", "Phases, stylised facts and major theories of trade/business cycles", "Real Business Cycle theory as enrichment"]}, {"topic": "Monetary and Fiscal Policy", "subs": ["Objectives and instruments of monetary policy", "Objectives and instruments of fiscal policy", "Crowding-out effect", "Objectives, instruments, effectiveness and policy lags", "Automatic stabilisers and fiscal-monetary coordination", "Mundell-Fleming and open-economy policy as supporting application"]}, {"topic": "Rational Expectation Hypothesis and its Critique", "subs": ["Rational Expectations Hypothesis", "New Classical Economics", "New Keynesian Economics", "Real Business Cycle theory", "Adaptive versus rational expectations", "Policy ineffectiveness proposition and Lucas critique", "New Classical and New Keynesian perspectives as supporting comparison"]}]}, {"unit": "Unit 3", "unit_name": "Statistics and Econometrics", "topics": [{"topic": "Probability Theory: Concepts, Distributions, Moments and Central Limit Theorem", "subs": ["Concepts of probability: classical, relative frequency, axiomatic", "Probability distributions: Binomial, Poisson, Normal", "Conditional probability and Bayes' theorem", "Sample space, events, conditional probability, independence and Bayes theorem", "Random variables, PMF, PDF, CDF, expectation, variance and covariance", "Binomial, Poisson and Normal distributions; moments, skewness and kurtosis", "Law of Large Numbers and Central Limit Theorem"]}, {"topic": "Descriptive Statistics – Measures of Central Tendency & Dispersion, Correlation and Index Numbers", "subs": ["Simple correlation and rank correlation", "Simple linear regression", "Multiple regression analysis", "Partial and multiple correlation", "Logit and Probit models", "Index numbers: construction and uses", "Laspeyres, Paasche and Fisher's Index", "Arithmetic, geometric and harmonic mean; median and mode", "Range, quartiles, variance, standard deviation and coefficient of variation", "Pearson, rank, partial and multiple correlation", "Laspeyres, Paasche, Fisher and Marshall-Edgeworth index numbers"]}, {"topic": "Sampling Methods and Sampling Distribution", "subs": ["Sampling methods: probability and non-probability sampling", "Sampling distribution and Central Limit Theorem", "Sampling and non-sampling errors", "Simple random, stratified, systematic, cluster and multistage sampling", "Probability versus non-probability sampling and sampling errors", "Sampling distribution and standard error"]}, {"topic": "Statistical Inference and Hypothesis Testing", "subs": ["Point and interval estimation", "Properties of estimators: unbiasedness, efficiency, consistency", "Hypothesis testing: Type I and Type II errors", "t-test, Z-test, Chi-square test, F-test", "Point and interval estimation; properties of estimators", "Null and alternative hypothesis, p-value, significance and confidence intervals", "Z, t, Chi-square and F tests; one-tailed and two-tailed testing"]}, {"topic": "Linear Regression Models and their Properties – BLUE", "subs": ["Simple correlation and rank correlation", "Simple linear regression", "Multiple regression analysis", "Partial and multiple correlation", "Assumptions of CLRM", "Ordinary Least Squares (OLS) estimation", "Properties of OLS estimators (BLUE)", "Goodness of fit: R-squared and adjusted R-squared", "Simple and multiple regression, OLS estimation and interpretation", "Gauss-Markov theorem, unbiasedness, consistency, efficiency and BLUE", "R-squared, adjusted R-squared, residuals and prediction"]}, {"topic": "Identification Problem", "subs": ["Structural and reduced form equations", "Identification problem: order and rank conditions", "Estimation methods: 2SLS, ILS", "Structural versus reduced form equations", "Order and rank conditions; under-, just- and over-identification"]}, {"topic": "Simultaneous Equation Models – Recursive and Non-Recursive", "subs": ["Structural and reduced form equations", "Identification problem: order and rank conditions", "Estimation methods: 2SLS, ILS", "Recursive and non-recursive systems", "ILS, IV intuition and Two-Stage Least Squares (2SLS)"]}, {"topic": "Discrete Choice Models", "subs": ["Logit and Probit models", "Index numbers: construction and uses", "Laspeyres, Paasche and Fisher's Index", "Linear Probability Model, Logit and Probit", "Odds, probabilities and marginal effects"]}, {"topic": "Time Series Analysis", "subs": ["Components of time series", "Stationarity and Unit root tests (ADF test)", "Cointegration and Error Correction Model", "Panel data models: Fixed effects and Random effects", "Multicollinearity: detection and remedies", "Heteroscedasticity: detection and remedies", "Autocorrelation: detection and remedies", "Specification errors", "Trend, seasonality, cyclical and irregular components", "Stationarity, autocorrelation and forecasting", "AR, MA and ARIMA basics; unit root and cointegration as advanced enrichment", "Heteroscedasticity, multicollinearity, autocorrelation and specification errors"]}]}, {"unit": "Unit 4", "unit_name": "Mathematical Economics", "topics": [{"topic": "Sets, Functions and Continuity, Sequence and Series", "subs": ["Types of functions used in economics", "Limits and continuity", "Rules of differentiation and their economic applications", "Partial derivatives and their applications", "Sets, subsets, union, intersection and Cartesian product", "Relations, domain, range, inverse, one-one and onto functions", "Sequences, arithmetic and geometric series, convergence intuition"]}, {"topic": "Differential Calculus and its Applications", "subs": ["Types of functions used in economics", "Limits and continuity", "Rules of differentiation and their economic applications", "Partial derivatives and their applications", "Elasticity using derivatives", "Marginal analysis", "Optimisation: maxima and minima (unconstrained)", "Limits, continuity, derivative rules and higher-order derivatives", "Partial derivatives, total differential and chain rule", "Elasticity, marginal analysis, comparative statics and economic optimisation"]}, {"topic": "Linear Algebra – Matrices and Vector Spaces", "subs": ["Matrix operations and determinants", "Rank of a matrix and inverse of a matrix", "Solving system of linear equations using matrices (Cramer's rule)", "Eigenvalues and eigenvectors", "Matrix types and operations, determinants, inverse and rank", "Systems of linear equations and Cramer's rule", "Vectors, linear independence, basis, dimension and eigenvalues/eigenvectors"]}, {"topic": "Static Optimization Problems and their Applications", "subs": ["Constrained optimisation: Lagrange multiplier method", "Kuhn-Tucker conditions", "Difference equations and their economic applications", "Differential equations and their economic applications", "Elasticity using derivatives", "Marginal analysis", "Optimisation: maxima and minima (unconstrained)", "Unconstrained multivariable optimisation", "First- and second-order conditions", "Lagrange multiplier and Kuhn-Tucker conditions with economic applications"]}, {"topic": "Input-Output Model and Linear Programming", "subs": ["Leontief input-output model", "Technical coefficients and Hawkins-Simon condition", "Basic concepts of game theory in mathematical form", "Formulation of LP problems", "Graphical method of solution", "Simplex method", "Duality in linear programming", "Leontief model, technical coefficient matrix and open/closed models", "Hawkins-Simon condition and interpretation", "Objective function, constraints, feasible region, graphical solution, simplex and duality"]}, {"topic": "Difference and Differential Equations with Applications", "subs": ["Constrained optimisation: Lagrange multiplier method", "Kuhn-Tucker conditions", "Difference equations and their economic applications", "Differential equations and their economic applications", "First-order difference equations, stability and dynamic adjustment", "First-order differential equations, steady state and economic applications"]}]}, {"unit": "Unit 5", "unit_name": "International Economics", "topics": [{"topic": "International Trade: Basic Concepts and Analytical Tools", "subs": ["Classical theory: Absolute and Comparative advantage (Ricardian model)", "Neo-classical theory: Heckscher-Ohlin model", "Leontief Paradox", "New Trade theories: Intra-industry trade, economies of scale", "Concept and types of terms of trade", "Offer curves and gains from trade", "Absolute advantage, comparative advantage, opportunity cost and production possibility frontier", "Offer curves and autarky versus trade"]}, {"topic": "Theories of International Trade", "subs": ["Classical theory: Absolute and Comparative advantage (Ricardian model)", "Neo-classical theory: Heckscher-Ohlin model", "Leontief Paradox", "New Trade theories: Intra-industry trade, economies of scale", "Ricardian model and Heckscher-Ohlin model", "Factor abundance, factor intensity and Stolper-Samuelson theorem", "Rybczynski theorem, factor-price equalisation and Leontief paradox"]}, {"topic": "International Trade under Imperfect Competition", "subs": ["Classical theory: Absolute and Comparative advantage (Ricardian model)", "Neo-classical theory: Heckscher-Ohlin model", "Leontief Paradox", "New Trade theories: Intra-industry trade, economies of scale", "Monopolistic competition, increasing returns and intra-industry trade", "New trade theory and strategic trade-policy intuition"]}, {"topic": "Balance of Payments: Composition, Equilibrium, Disequilibrium and Adjustment Mechanisms", "subs": ["Structure and components of BoP", "Disequilibrium in BoP: causes", "Adjustment mechanisms: price, income and monetary approach", "Current, capital and financial accounts; reserve assets and accounting identity", "Price, income, monetary, absorption and elasticity approaches", "Expenditure-switching/changing policies and J-curve"]}, {"topic": "Exchange Rate: Concepts and Theories", "subs": ["Determination of exchange rate", "Purchasing Power Parity theory", "Interest Rate Parity", "Fixed exchange rate system", "Flexible/floating exchange rate system", "Managed float and currency crises", "Spot and forward rates; appreciation, depreciation, revaluation and devaluation", "Purchasing Power Parity and Interest Rate Parity", "Fixed, flexible and managed exchange-rate regimes"]}, {"topic": "Foreign Exchange Market and Arbitrage", "subs": ["Determination of exchange rate", "Purchasing Power Parity theory", "Interest Rate Parity", "Demand and supply of foreign exchange and market equilibrium", "Covered and uncovered interest arbitrage; triangular arbitrage basics"]}, {"topic": "Gains from Trade, Terms of Trade and Trade Multiplier", "subs": ["Concept and types of terms of trade", "Offer curves and gains from trade", "Commodity, income and factoral terms of trade", "Trade multiplier and foreign-trade income effects"]}, {"topic": "Tariff and Non-Tariff Barriers to Trade; Dumping", "subs": ["Tariff barriers: types and effects", "Non-tariff barriers: quotas, subsidies", "Free trade vs. Protection debate", "Tariffs, quotas, subsidies, voluntary export restraints and welfare effects", "Effective protection and anti-dumping policy", "Persistent, predatory and sporadic dumping"]}, {"topic": "GATT, WTO and Regional Trade Blocks; Trade Policy Issues", "subs": ["Evolution of international monetary system: Gold Standard, Bretton Woods", "International Monetary Fund (IMF)", "World Bank Group", "World Trade Organisation (WTO)", "Forms of economic integration: FTA, Customs Union, Common Market", "Regional Trade Agreements and Trade blocs", "GATT principles, WTO functions, MFN, National Treatment and dispute settlement", "Free Trade Area, Customs Union, Common Market and regional integration", "Contemporary trade policy issues"]}, {"topic": "IMF and World Bank", "subs": ["Evolution of international monetary system: Gold Standard, Bretton Woods", "International Monetary Fund (IMF)", "World Bank Group", "World Trade Organisation (WTO)", "IMF objectives, functions, surveillance and balance-of-payments assistance", "IBRD, IDA and World Bank development finance"]}]}, {"unit": "Unit 6", "unit_name": "Public Economics", "topics": [{"topic": "Market Failure and Remedial Measures: Asymmetric Information, Public Goods and Externality", "subs": ["Characteristics of public goods", "Free-rider problem", "Provision of public goods: Lindahl and Samuelson conditions", "Non-rivalry, non-excludability, free-rider problem and Samuelson condition", "Positive and negative production/consumption externalities", "Pigouvian tax, subsidy, tradable permits and property-right solutions", "Adverse selection, moral hazard, signalling, screening and principal-agent problems"]}, {"topic": "Regulation of Market – Collusion and Consumers' Welfare", "subs": ["Social Cost-Benefit Analysis: techniques", "Public Choice theory: voting, bureaucracy", "Market power and regulation", "Cartels, collusion, competition policy and consumer welfare", "Price regulation, ceilings/floors and regulatory trade-offs"]}, {"topic": "Public Revenue: Tax & Non-Tax Revenue, Direct & Indirect Taxes, Progressive and Non-Progressive Taxation, Incidence and Effects of Taxation", "subs": ["Principles and canons of taxation", "Direct and Indirect taxes", "Tax incidence and shifting", "Effects of taxation on production and distribution", "Optimal taxation theory", "Tax bases, tax rates, proportional, progressive and regressive taxation", "Statutory versus economic incidence, shifting and elasticity", "Deadweight loss, excess burden, neutrality and optimal taxation basics"]}, {"topic": "Public Expenditure", "subs": ["Wagner's Law of increasing state activity", "Wiseman-Peacock hypothesis", "Causes of growth of public expenditure", "Classification and growth of public expenditure", "Wagner's Law and Peacock-Wiseman hypothesis", "Development expenditure, transfer payments and public investment"]}, {"topic": "Public Debt and its Management", "subs": ["Sources and types of public debt", "Burden of public debt", "Debt management and sustainability", "Internal and external debt; productive and unproductive debt", "Debt burden, sustainability, management and crowding-out"]}, {"topic": "Public Budget and Budget Multiplier", "subs": ["Objectives and instruments of fiscal policy", "Budgetary process and deficits: Fiscal, Revenue and Primary deficit", "Zero-based budgeting, Performance budgeting", "Revenue and capital budget, fiscal, revenue and primary deficits", "Budget process, balanced-budget multiplier and fiscal transparency"]}, {"topic": "Fiscal Policy and its Implications", "subs": ["Objectives and instruments of fiscal policy", "Budgetary process and deficits: Fiscal, Revenue and Primary deficit", "Zero-based budgeting, Performance budgeting", "Expansionary and contractionary policy", "Automatic stabilisers, stabilisation objectives and fiscal sustainability"]}]}, {"unit": "Unit 7", "unit_name": "Money and Banking", "topics": [{"topic": "Components of Money Supply", "subs": ["Functions of money", "Quantity Theory of Money: Fisher's and Cambridge version", "Keynesian and post-Keynesian theories of money", "Determinants of demand for money", "High-powered money and money multiplier", "Determinants of money supply", "Functions of money, monetary aggregates and liquidity", "Currency, demand deposits, time deposits and high-powered money"]}, {"topic": "Central Bank", "subs": ["Commercial banks: functions and balance sheet", "Central bank: functions and role", "Credit creation by commercial banks", "Issue of currency, banker to government, banker’s bank and lender of last resort", "Clearing, reserve management, foreign exchange and developmental functions"]}, {"topic": "Commercial Banking", "subs": ["Commercial banks: functions and balance sheet", "Central bank: functions and role", "Credit creation by commercial banks", "Commercial bank balance sheet, deposits, loans and credit creation", "Liquidity, profitability and basic banking risks"]}, {"topic": "Instruments and Working of Monetary Policy", "subs": ["Objectives of monetary policy", "Instruments: CRR, SLR, Repo/Reverse Repo, OMO, Bank Rate", "Transmission mechanism of monetary policy", "CRR, SLR, bank rate, repo, reverse repo and open market operations", "Selective credit controls and transmission mechanism", "Inflation targeting and limitations of monetary policy"]}, {"topic": "Non-Banking Financial Institutions", "subs": ["Role and regulation of NBFCs", "Development financial institutions", "Banking sector reforms post-1991", "Basel norms and prudential regulation", "Non-Performing Assets (NPAs) and resolution mechanisms", "NBFCs, development financial institutions, insurance and pension institutions", "Mutual funds and shadow banking concepts", "Prudential regulation, Basel norms and NPAs as supporting coverage"]}, {"topic": "Capital Market and its Regulation", "subs": ["Money market and capital market", "Role of SEBI, RBI, IRDAI", "Financial intermediaries", "Money market versus capital market", "Primary and secondary markets, equity and debt instruments", "Stock exchanges, SEBI and investor protection"]}]}, {"unit": "Unit 8", "unit_name": "Growth and Development Economics", "topics": [{"topic": "Economic Growth and Economic Development", "subs": ["Harrod-Domar growth model", "Solow growth model and convergence hypothesis", "Endogenous growth theories (Romer, Lucas)", "Growth versus development, welfare, capabilities and structural change", "Determinants and constraints of development"]}, {"topic": "Theories of Economic Development: Adam Smith, Ricardo, Marx, Schumpeter, Rostow, Balanced & Unbalanced Growth, Big Push Approach", "subs": ["Lewis model of surplus labour", "Rosenstein-Rodan's Big Push theory", "Nurkse's theory of balanced growth", "Hirschman's theory of unbalanced growth", "Rostow's stages of economic growth", "Myrdal's theory of circular causation", "Division of labour, capital accumulation and diminishing returns", "Marxian accumulation and class dynamics", "Innovation, entrepreneurship and creative destruction", "Rostow stages, Rosenstein-Rodan Big Push, Nurkse balanced growth and Hirschman unbalanced growth"]}, {"topic": "Models of Economic Growth: Harrod-Domar, Solow, Robinson, Kaldor", "subs": ["Harrod-Domar growth model", "Solow growth model and convergence hypothesis", "Endogenous growth theories (Romer, Lucas)", "Savings-investment and capital-output ratio", "Steady state, convergence, golden rule and technological progress", "Robinson and Kaldor distribution-growth models"]}, {"topic": "Technical Progress – Disembodied & Embodied; Endogenous Growth", "subs": ["Structural transformation of economies", "Role of technology and innovation in development", "Neutral, labour-augmenting and capital-augmenting technical progress", "Human capital, knowledge spillovers, R&D and AK/endogenous growth models"]}, {"topic": "Indicators of Economic Development: PQLI, HDI, SDGs", "subs": ["Human Development Index (HDI)", "Physical Quality of Life Index (PQLI)", "Gender-related development indices", "Multidimensional Poverty Index (MPI)", "Composite indices, MPI and non-income indicators as supporting coverage", "Limitations of development indicators"]}, {"topic": "Poverty and Inequalities – Concepts and Measurement", "subs": ["Concepts and measures of poverty (Head Count Ratio, Poverty Gap)", "Measures of inequality: Lorenz curve, Gini coefficient", "Kuznets hypothesis", "Absolute and relative poverty, poverty line, headcount, poverty gap and severity", "Lorenz curve, Gini coefficient and Kuznets hypothesis"]}, {"topic": "Social Sector Development: Health, Education, Gender", "subs": ["Role of education and health in development", "Human capital formation", "Concept of sustainable development", "Green GDP and environmental accounting", "Human capital formation, access, quality and gender dimensions", "Health and education outcomes and public policy"]}]}, {"unit": "Unit 9", "unit_name": "Environmental Economics and Demography", "topics": [{"topic": "Environment as a Public Good", "subs": ["Environmental quality as a public good", "Common resources and open-access resources"]}, {"topic": "Market Failure", "subs": ["Externalities, missing markets, property rights and common-pool resources", "Environmental market failure and policy failure"]}, {"topic": "Coase Theorem", "subs": ["Bargaining, transaction costs and efficient allocation", "Limitations in environmental applications"]}, {"topic": "Cost-Benefit Analysis and Compensation Criteria", "subs": ["Social costs and benefits, discounting, NPV and benefit-cost ratio", "Kaldor-Hicks compensation and project appraisal"]}, {"topic": "Valuation of Environmental Goods", "subs": ["Use and non-use values", "Contingent valuation, hedonic pricing, travel-cost method and stated preference"]}, {"topic": "Theories of Population", "subs": ["Malthusian theory", "Demographic transition theory", "Optimum population theory and population-resource relationship"]}, {"topic": "Concepts and Measures: Fertility, Morbidity and Mortality", "subs": ["Crude birth rate, general fertility rate and total fertility rate", "Crude death rate, infant mortality, morbidity and life expectancy"]}, {"topic": "Age Structure and Demographic Dividend", "subs": ["Age-sex pyramid and dependency ratio", "Working-age population, demographic dividend and policy conditions"]}, {"topic": "Life Table", "subs": ["Survivorship, mortality rates and expectation of life", "Construction and interpretation of life tables"]}, {"topic": "Migration", "subs": ["Internal and international migration", "Push-pull factors, remittances, brain drain and migration policy"]}]}, {"unit": "Unit 10", "unit_name": "Indian Economy", "topics": [{"topic": "Economic Growth in India: Pattern and Structure", "subs": ["Pre-independence economic structure", "Post-independence growth trends", "Liberalisation, Privatisation and Globalisation (LPG)", "Structural adjustment programme", "Impact of reforms on growth and sectors", "Pre-independence structure and post-independence growth phases", "Structural transformation, sectoral shares, savings and investment", "Liberalisation, privatisation and globalisation as policy context"]}, {"topic": "Agriculture: Pattern & Structure of Growth, Major Challenges, Policy Responses", "subs": ["Land reforms in India", "Green Revolution and its impact", "Agricultural pricing and marketing policy", "Agricultural credit and institutional finance", "Productivity, cropping pattern, irrigation and land issues", "MSP, procurement, subsidies, agricultural credit, insurance and food security", "Agricultural marketing, storage, supply chains and climate challenges"]}, {"topic": "Industry: Pattern & Structure of Growth, Major Challenges, Policy Responses", "subs": ["Industrial policy since independence", "Role of public and private sector", "Small-scale and MSME sector", "Industrial structure, manufacturing, MSMEs and public/private sector", "Industrial policy, competitiveness, infrastructure and reforms"]}, {"topic": "Services: Pattern & Structure of Growth, Major Challenges, Policy Responses", "subs": ["IT/ITES, finance, tourism, health and education services", "Employment, productivity, digital services and export competitiveness"]}, {"topic": "Rural Development – Issues, Challenges & Policy Responses", "subs": ["Rural poverty, employment, infrastructure, credit and livelihoods", "Self-help groups, decentralisation and rural development programmes"]}, {"topic": "Urban Development – Issues, Challenges and Policy Responses", "subs": ["Urbanisation, housing, transport, sanitation, water and municipal finance", "Urban poverty and urban policy"]}, {"topic": "Foreign Trade: Structure and Direction, BOP, Flow of Foreign Capital, Trade Policies", "subs": ["Composition and direction of India's foreign trade", "India's Balance of Payments trends", "Foreign exchange reserves and external debt", "Composition and direction of exports/imports", "Current account and trade balance trends", "FDI, FPI, external capital flows, external debt and trade policy"]}, {"topic": "Infrastructure Development: Physical and Social; Public-Private Partnerships", "subs": ["Transport, power, communication and logistics infrastructure", "Health, education and sanitation infrastructure", "PPP models, risk allocation, viability and financing"]}, {"topic": "Reforms in Land, Labour and Capital Markets", "subs": ["Land-market reforms and land acquisition concepts", "Labour-market reforms and labour codes overview", "Capital-market reforms and financial deepening"]}, {"topic": "Centre-State Financial Relations and Finance Commissions of India; FRBM", "subs": ["Union budget and fiscal policy trends", "Monetary policy framework and inflation targeting in India", "Fiscal federalism, vertical/horizontal imbalance and grants", "Finance Commission and tax devolution", "FRBM framework, fiscal responsibility and deficit management"]}, {"topic": "Poverty, Inequality & Unemployment", "subs": ["Trends and measurement of poverty in India", "Types of unemployment in India", "Regional and income inequality in India", "Health and education indicators in India", "Social sector programmes and schemes", "Population growth and composition", "Demographic dividend", "Migration and urbanisation trends", "Objectives and strategy of Five-Year Plans", "Evolution from Planning Commission to NITI Aayog", "Poverty and inequality measurement in India", "Unemployment types and labour-force concepts", "Human development, demographic dividend, migration and urbanisation trends", "Planning Commission to NITI Aayog as policy evolution context"]}]}]};
+
+let currentPaper = 'paper1';
+let openState = {};   // "paper1-0": true/false
+let progress = { paper1:{}, paper2:{} };  // progress[paper]["u-t"] = [bool,...]
+let saveTimer = null;
+
+const REV_LABELS = ['1st read','2nd read (Revision 1)','3rd read (Revision 2)'];
+
+function keyFor(paper, u, t){ return u+'-'+t; }
+
+async function loadProgress(){
+  try{
+    const r1 = await window.storage.get('net-eco-progress-paper1');
+    if(r1) progress.paper1 = JSON.parse(r1.value);
+  }catch(e){}
+  try{
+    const r2 = await window.storage.get('net-eco-progress-paper2');
+    if(r2) progress.paper2 = JSON.parse(r2.value);
+  }catch(e){}
+  renderAll();
+}
+
+function queueSave(paper){
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(async ()=>{
+    try{
+      await window.storage.set('net-eco-progress-'+paper, JSON.stringify(progress[paper]), false);
+    }catch(e){ console.error('save failed', e); }
+  }, 500);
+}
+
+// Each subtopic now has 3 revision checkboxes -> flat array length subs.length*3
+// index for subtopic s, revision r (0,1,2) = s*3 + r
+function getSubsState(paper, u, t, subCount){
+  const k = keyFor(paper,u,t);
+  const need = subCount*3;
+  if(!progress[paper][k] || progress[paper][k].length !== need){
+    progress[paper][k] = new Array(need).fill(false);
+  }
+  return progress[paper][k];
+}
+
+function toggleSub(paper, u, t, s, r){
+  const unit = SYLLABUS[paper][u];
+  const subCount = unit.topics[t].subs.length;
+  const arr = getSubsState(paper,u,t,subCount);
+  const idx = s*3+r;
+  arr[idx] = !arr[idx];
+  queueSave(paper);
+  renderAll();
+}
+
+function unitStats(paper, u){
+  const unit = SYLLABUS[paper][u];
+  let checksTotal=0, checksDone=0, subsCount=0, subsMastered=0, subsCovered=0;
+  unit.topics.forEach((topic,t)=>{
+    const arr = getSubsState(paper,u,t,topic.subs.length);
+    checksTotal += topic.subs.length*3;
+    checksDone += arr.filter(Boolean).length;
+    subsCount += topic.subs.length;
+    for(let s=0;s<topic.subs.length;s++){
+      if(arr[s*3]) subsCovered++;
+      if(arr[s*3]&&arr[s*3+1]&&arr[s*3+2]) subsMastered++;
+    }
+  });
+  return {total:checksTotal, done:checksDone, topics:unit.topics.length, subsCount, subsMastered, subsCovered};
+}
+
+function paperStats(paper){
+  let total=0, done=0, topics=0, subsCount=0, subsMastered=0, subsCovered=0;
+  SYLLABUS[paper].forEach((unit,u)=>{
+    const s = unitStats(paper,u);
+    total += s.total; done += s.done; topics += s.topics;
+    subsCount += s.subsCount; subsMastered += s.subsMastered; subsCovered += s.subsCovered;
+  });
+  return {total, done, topics, units:SYLLABUS[paper].length, subsCount, subsMastered, subsCovered};
+}
+
+function setPaper(p){
+  currentPaper = p;
+  document.querySelectorAll('.tab-btn').forEach(b=>{
+    b.setAttribute('data-active', b.dataset.paper===p ? 'true':'false');
+  });
+  const accent = p==='paper1' ? 'var(--p1)' : 'var(--p2)';
+  const accentSoft = p==='paper1' ? 'var(--p1-soft)' : 'var(--p2-soft)';
+  document.getElementById('ledger').style.setProperty('--accent', accent);
+  document.getElementById('ledger').style.setProperty('--accent-soft', accentSoft);
+  renderAll();
+}
+
+function expandAll(open){
+  SYLLABUS[currentPaper].forEach((u,i)=>{ openState[currentPaper+'-'+i] = open; });
+  renderDrawers();
+}
+
+function renderAll(){
+  renderLedger();
+  renderShelf();
+  renderDrawers();
+}
+
+function renderLedger(){
+  const stats = paperStats(currentPaper);
+  const coveredPct = stats.subsCount ? Math.round(100*stats.subsCovered/stats.subsCount) : 0;
+  const masteredPct = stats.subsCount ? Math.round(100*stats.subsMastered/stats.subsCount) : 0;
+  document.getElementById('stampPct').textContent = coveredPct + '%';
+  document.getElementById('ledgerTitle').textContent = (currentPaper==='paper1' ? 'Paper I' : 'Paper II') + ' coverage';
+  document.getElementById('ledgerFrac').textContent = stats.subsCovered + ' / ' + stats.subsCount + ' sub-topics covered';
+  document.getElementById('ledgerFill').style.width = coveredPct + '%';
+  document.getElementById('ledgerFillMastered').style.width = masteredPct + '%';
+  document.getElementById('statUnits').textContent = stats.units;
+  document.getElementById('statTopics').textContent = stats.topics;
+  document.getElementById('statSubs').textContent = stats.subsCount;
+  document.getElementById('statMastered').textContent = stats.subsMastered;
+}
+
+function renderShelf(){
+  const shelf = document.getElementById('shelf');
+  shelf.innerHTML = '';
+  SYLLABUS[currentPaper].forEach((unit,u)=>{
+    const s = unitStats(currentPaper,u);
+    const pct = s.subsCount ? Math.round(100*s.subsCovered/s.subsCount) : 0;
+    const tile = document.createElement('div');
+    tile.className = 'shelf-tile';
+    tile.title = unit.unit_name + ' — ' + pct + '% covered';
+    tile.innerHTML = '<div class="fillbg" style="height:'+pct+'%"></div><b>'+(u+1)+'</b><small>'+pct+'%</small>';
+    tile.onclick = ()=>{
+      openState[currentPaper+'-'+u] = true;
+      renderDrawers();
+      document.getElementById('drawer-'+u).scrollIntoView({behavior:'smooth', block:'start'});
+    };
+    shelf.appendChild(tile);
+  });
+}
+
+function highlight(text, q){
+  if(!q) return text;
+  const idx = text.toLowerCase().indexOf(q.toLowerCase());
+  if(idx===-1) return text;
+  return text.slice(0,idx) + '<mark style="background:var(--gold-soft);border-radius:2px;">' + text.slice(idx, idx+q.length) + '</mark>' + text.slice(idx+q.length);
+}
+
+function renderDrawers(){
+  const container = document.getElementById('drawers');
+  container.innerHTML = '';
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  const accent = currentPaper==='paper1' ? 'var(--p1)' : 'var(--p2)';
+
+  let anyMatch = false;
+
+  SYLLABUS[currentPaper].forEach((unit,u)=>{
+    // filter topics by query
+    const matchedTopics = unit.topics.map((topic,t)=>{
+      const topicMatch = topic.topic.toLowerCase().includes(q);
+      const subMatches = topic.subs.filter(s=>s.toLowerCase().includes(q));
+      const show = !q || topicMatch || subMatches.length>0;
+      return {topic, t, show, topicMatch};
+    });
+    const unitVisible = !q || unit.unit_name.toLowerCase().includes(q) || matchedTopics.some(x=>x.show);
+    if(!unitVisible) return;
+    anyMatch = true;
+
+    const isOpen = q ? true : !!openState[currentPaper+'-'+u];
+    const s = unitStats(currentPaper,u);
+    const coveredPct = s.subsCount ? Math.round(100*s.subsCovered/s.subsCount) : 0;
+    const masteredPct = s.subsCount ? Math.round(100*s.subsMastered/s.subsCount) : 0;
+
+    const drawer = document.createElement('div');
+    drawer.className = 'drawer';
+    drawer.id = 'drawer-'+u;
+    drawer.dataset.open = isOpen ? 'true':'false';
+    drawer.style.setProperty('--accent', accent);
+
+    const head = document.createElement('div');
+    head.className = 'drawer-head';
+    head.onclick = ()=>{ openState[currentPaper+'-'+u] = !openState[currentPaper+'-'+u]; renderDrawers(); };
+    head.innerHTML = `
+      <div class="drawer-num">${String(u+1).padStart(2,'0')}</div>
+      <div class="drawer-title-wrap">
+        <div class="drawer-title">${highlight(unit.unit_name,q)}</div>
+        <div class="drawer-sub">${s.topics} chapters · ${s.subsCount} sub-topics</div>
+      </div>
+      <div class="drawer-progress">
+        <div class="ledger-track"><div class="ledger-fill" style="width:${coveredPct}%"></div><div class="ledger-fill-mastered" style="width:${masteredPct}%"></div></div>
+        <div class="drawer-progress-pct">${coveredPct}% covered · ${masteredPct}% mastered</div>
+      </div>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    `;
+    drawer.appendChild(head);
+
+    const body = document.createElement('div');
+    body.className = 'drawer-body';
+    const grid = document.createElement('div');
+    grid.className = 'topic-grid';
+
+    matchedTopics.forEach(({topic,t,show})=>{
+      if(!show) return;
+      const arr = getSubsState(currentPaper,u,t,topic.subs.length);
+      let mastered = 0, covered = 0;
+      let subsHtml = topic.subs.map((s,si)=>{
+        const r0 = arr[si*3] ? 'checked' : '';
+        const r1 = arr[si*3+1] ? 'checked' : '';
+        const r2 = arr[si*3+2] ? 'checked' : '';
+        const isCovered = arr[si*3];
+        const isMastered = arr[si*3] && arr[si*3+1] && arr[si*3+2];
+        if(isCovered) covered++;
+        if(isMastered) mastered++;
+        let cls = '';
+        if(isMastered) cls = 'mastered';
+        else if(isCovered) cls = 'covered';
+        return `<li class="sub-item${cls ? ' '+cls : ''}">
+            <span class="sub-text">${highlight(s,q)}</span>
+            <input class="rchk" type="checkbox" title="${REV_LABELS[0]}" ${r0} onchange="toggleSub('${currentPaper}',${u},${t},${si},0)">
+            <input class="rchk" type="checkbox" title="${REV_LABELS[1]}" ${r1} onchange="toggleSub('${currentPaper}',${u},${t},${si},1)">
+            <input class="rchk" type="checkbox" title="${REV_LABELS[2]}" ${r2} onchange="toggleSub('${currentPaper}',${u},${t},${si},2)">
+          </li>`;
+      }).join('');
+      const card = document.createElement('div');
+      card.className = 'topic-card';
+      card.innerHTML = `
+        <div class="topic-head">
+          <div class="topic-title">${highlight(topic.topic,q)}</div>
+          <div class="topic-badges">
+            <div class="topic-frac covered">${covered}/${topic.subs.length} covered</div>
+            <div class="topic-frac mastered">${mastered}/${topic.subs.length} mastered</div>
+          </div>
+        </div>
+        <div class="sub-header"><span></span><span class="rlabel" title="${REV_LABELS[0]}">1</span><span class="rlabel" title="${REV_LABELS[1]}">2</span><span class="rlabel" title="${REV_LABELS[2]}">3</span></div>
+        <ul class="sub-list">${subsHtml}</ul>
+      `;
+      grid.appendChild(card);
+    });
+
+    body.appendChild(grid);
+    drawer.appendChild(body);
+    container.appendChild(drawer);
+  });
+
+  if(!anyMatch){
+    container.innerHTML = '<div class="empty-state">No chapters or sub-topics match your search.</div>';
+  }
+}
+
+setPaper('paper1');
+loadProgress();
+</script>
+</body>
+</html>
